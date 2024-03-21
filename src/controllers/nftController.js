@@ -6,31 +6,30 @@ import {OrbitDBAccessController} from "@orbitdb/core";
 
 export const getNFTInfo = async (req, res)=> {
     try {
-        const db = await orbitDB.getDB();
+        const address = req.params.address
+        const db = await orbitDB.getDB(`/orbitdb/${address}`);
         res.status(StatusCodes.OK).json(await db.all())
+    } catch (e) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e })
+    }
+}
+export const getNFTInfoByKey = async (req, res)=> {
+    try {
+        const address = req.params.address
+        const key = req.params.key
+        const db = await orbitDB.getDB(`/orbitdb/${address}`);
+        res.status(StatusCodes.OK).json(await db.get(key))
     } catch (e) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e })
     }
 }
 
 export const setNFTInfo = async (req, res)=> {
-    const {hashedKey,nftMetadata} = req.body
+    const {nftMetadata} = req.body
     try {
-        const options = {
-            EXPERIMENTAL: {
-                pubsub: true,
-            },
-            accessController: {
-                write: ['*']
-            }
-        }
-        // const db = await orbitdb.open('nodejs', { AccessController: OrbitDBAccessController({ write: ['*'] }) })
-        const name = process.env.ORBIT_DB_NAME
-        const type="documents"
-        const db = await orbitdb.open(name, { AccessController: OrbitDBAccessController({ write: ['*'] }) }, type)
-        console.log(db, 'cont')
-        const a = await db.add(nftMetadata);
-        console.log({a}, 'A')
+        const db = await orbitdb.open('/orbitdb/zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW')
+        await db.put(nftMetadata);
+        console.log(await db.all(), 'ALL')
         // res.sendStatus(200);
         res.status(StatusCodes.OK).json(await db.all())
     } catch (e) {

@@ -1,5 +1,5 @@
 import { createHelia } from 'helia'
-import { createOrbitDB, OrbitDBAccessController } from '@orbitdb/core'
+import {createOrbitDB, Documents, OrbitDBAccessController} from '@orbitdb/core'
 import { createLibp2p } from 'libp2p'
 import { identify } from '@libp2p/identify'
 import { mdns } from '@libp2p/mdns'
@@ -46,8 +46,9 @@ export const orbitdb = await createOrbitDB({ ipfs, id: `nodejs-${id}`, directory
 let db
 
 if (process.argv.length > 2) {
+    console.log(process.argv, 'process.argv')
     const remoteDBAddress = process.argv.pop()
-
+    console.log(remoteDBAddress, 'remoteDBAddress')
     db = await orbitdb.open(remoteDBAddress)
     await db.add(`hello world from peer ${id}`)
 
@@ -56,13 +57,20 @@ if (process.argv.length > 2) {
     }
 } else {
     const name = process.env.ORBIT_DB_NAME
-        const type="documents"
-    db = await orbitdb.open(name, { AccessController: OrbitDBAccessController({ write: ['*'] }) }, type)
-    db.add('asd')
-    console.log(db, 'DB')
-    console.log(db.address, 'tttest')
-
+    const type="documents"
+    db = await orbitdb.open(name, { Database: Documents({ indexBy: 'id'} )}, type)
+    await db.put({ id: 'test', name: 'test1' })
     db.events.on('update', event => {
-        console.log('update', event)
+        console.log('update_', event)
     })
 }
+process.on('SIGINT', async () => {
+    // print the final state of the db.
+    console.log((await db.all()).map(e => e.value),'sign')
+    // Close your db and stop OrbitDB and IPFS.
+    await db.close()
+    await orbitdb.stop()
+    await ipfs.stop()
+
+    process.exit()
+})

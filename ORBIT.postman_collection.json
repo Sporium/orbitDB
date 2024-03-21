@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "6a19c531-d7ae-4d63-822e-4ff5679dd5fa",
+		"name": "ORBIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30883658"
+	},
+	"item": [
+		{
+			"name": "Get By key",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/nft/zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"nft",
+						"zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create/Update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nftMetadata\": {\n       \"id\": \"reew\",\n        \"name\": \"nssde\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/nft",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"nft"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/nft/zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"nft",
+						"zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
