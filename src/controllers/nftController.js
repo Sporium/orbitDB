@@ -1,5 +1,7 @@
 import {StatusCodes} from "http-status-codes";
 import {orbitDB} from "../config/orbitDBConnection.js";
+import {orbitdb} from "../config/createDB.js";
+import {OrbitDBAccessController} from "@orbitdb/core";
 
 
 export const getNFTInfo = async (req, res)=> {
@@ -14,10 +16,22 @@ export const getNFTInfo = async (req, res)=> {
 export const setNFTInfo = async (req, res)=> {
     const {hashedKey,nftMetadata} = req.body
     try {
-        const db = await orbitDB.getDB();
-        const a = await db.put(nftMetadata);
-        console.log({a})
-        res.sendStatus(200);
+        const options = {
+            EXPERIMENTAL: {
+                pubsub: true,
+            },
+            accessController: {
+                write: ['*']
+            }
+        }
+        // const db = await orbitdb.open('nodejs', { AccessController: OrbitDBAccessController({ write: ['*'] }) })
+        const name = process.env.ORBIT_DB_NAME
+        const type="documents"
+        const db = await orbitdb.open(name, { AccessController: OrbitDBAccessController({ write: ['*'] }) }, type)
+        console.log(db, 'cont')
+        const a = await db.add(nftMetadata);
+        console.log({a}, 'A')
+        // res.sendStatus(200);
         res.status(StatusCodes.OK).json(await db.all())
     } catch (e) {
         console.log('ERROR', e)
