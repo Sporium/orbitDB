@@ -1,5 +1,5 @@
 import { createHelia } from 'helia'
-import {createOrbitDB, Documents, OrbitDBAccessController} from '@orbitdb/core'
+import {createOrbitDB, Documents} from '@orbitdb/core'
 import { createLibp2p } from 'libp2p'
 import { identify } from '@libp2p/identify'
 import { mdns } from '@libp2p/mdns'
@@ -51,7 +51,9 @@ if (process.argv.length > 2) {
     console.log(remoteDBAddress, 'remoteDBAddress')
     db = await orbitdb.open(remoteDBAddress)
     await db.add(`hello world from peer ${id}`)
-
+    db.sync.start()
+    console.log('sync')
+    console.log(db.all())
     for await (const res of db.iterator()) {
         console.log(res)
     }
@@ -60,6 +62,7 @@ if (process.argv.length > 2) {
     const type="documents"
     db = await orbitdb.open(name, { Database: Documents({ indexBy: 'id'} )}, type)
     await db.put({ id: 'test', name: 'test1' })
+    console.log(db)
     db.events.on('update', event => {
         console.log('update_', event)
     })
