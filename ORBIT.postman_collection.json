@@ -29,21 +29,12 @@
 			"response": []
 		},
 		{
-			"name": "Create/Update",
+			"name": "Delete By Key",
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"nftMetadata\": {\n       \"id\": \"reew\",\n        \"name\": \"nssde\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:4000/api/nft",
+					"raw": "http://localhost:4000/api/nft/zdpuAufdR1sPPPJ8KPASKYWq2cKSCSeEsv4Dwq1tBEpydHgse/111",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -51,7 +42,39 @@
 					"port": "4000",
 					"path": [
 						"api",
-						"nft"
+						"nft",
+						"zdpuAufdR1sPPPJ8KPASKYWq2cKSCSeEsv4Dwq1tBEpydHgse",
+						"111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create/Update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nftMetadata\": {\n       \"id\": \"6666\",\n        \"name\": \"nssde\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/nft/zdpuAuwsMmN7VwLnP4WyRJgtMztan5k4rX48JtPXLLqXWsVk9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"nft",
+						"zdpuAuwsMmN7VwLnP4WyRJgtMztan5k4rX48JtPXLLqXWsVk9"
 					]
 				}
 			},
@@ -63,16 +86,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/nft/zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW",
+					"raw": "http://localhost:5000/api/nft/zdpuAufdR1sPPPJ8KPASKYWq2cKSCSeEsv4Dwq1tBEpydHgse",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4000",
+					"port": "5000",
 					"path": [
 						"api",
 						"nft",
-						"zdpuAvVJjv9sC2yQNeBnXcqDhBphR4Gn2N3Fz31vDznAeq8YW"
+						"zdpuAufdR1sPPPJ8KPASKYWq2cKSCSeEsv4Dwq1tBEpydHgse"
 					]
 				}
 			},

@@ -6,9 +6,10 @@ export const getNFTInfo = async (req, res)=> {
     try {
         const address = req.params.address
         const db = await orbitdb.open(`/orbitdb/${address}`);
+        console.log(db, 'access')
         res.status(StatusCodes.OK).json(await db.all())
     } catch (e) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e.message })
     }
 }
 export const getNFTInfoByKey = async (req, res)=> {
@@ -18,7 +19,7 @@ export const getNFTInfoByKey = async (req, res)=> {
         const db = await orbitdb.open(`/orbitdb/${address}`);
         res.status(StatusCodes.OK).json(await db.get(key))
     } catch (e) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e.message })
     }
 }
 export const deleteNFTByKey = async (req, res)=> {
@@ -30,7 +31,7 @@ export const deleteNFTByKey = async (req, res)=> {
         res.status(StatusCodes.OK).json([])
     } catch (e) {
         console.log(e)
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e.message })
     }
 }
 
@@ -38,13 +39,14 @@ export const setNFTInfo = async (req, res)=> {
     const {nftMetadata} = req.body
     const address = req.params.address
     try {
-        const db = await orbitdb.open(`/orbitdb/${address}`)
-        await db.put(nftMetadata);
+        const db = await orbitdb.open(`/orbitdb/${address}`, {
+        })
+        await db?.put(nftMetadata);
         console.log(await db.all(), 'ALL')
         // res.sendStatus(200);
         res.status(StatusCodes.OK).json(await db.all())
     } catch (e) {
         console.log('ERROR', e)
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e.message })
     }
 }
